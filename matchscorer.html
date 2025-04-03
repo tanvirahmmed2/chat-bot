@@ -1,0 +1,361 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Counter</title>
+
+    <style>
+                *{
+            padding: 0;
+            margin: 0;
+
+        }
+
+        body{
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            user-select: none;
+        }
+        input{
+            border-radius: 5px;
+            width: 200px;
+            height: 25px;
+            text-align: center;
+            border: 0.1px solid ;
+            border-color: rgb(5, 5, 5);
+            outline: none;
+        }
+        #information{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        #board{
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 20px;
+        }
+        #first-innings{
+            display: block;
+        }
+        #second-innings, #pre{
+            display: none;
+        }
+        #next, #pre, #again{
+            width: 150px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: black;
+            color: #fff;
+            padding: 3px;
+            cursor: pointer;
+        }
+        #element{
+            display: flex;
+            flex-direction: column;
+            align-items: first baseline ;
+            gap: 4px;
+            margin: 4px;
+        }
+        label{
+            font-style: italic;
+            font-size: smaller;
+        }
+        #submit{
+            width: 100px;
+            margin: 10px;
+            border-radius: 5px;
+            border: 1px solid;
+            outline: none;
+            cursor: pointer;
+            color: black;
+            background-color: #fff;
+        }
+        #infotable{
+            margin: 10px;
+        }
+        #score-board1, #score-board2{
+            background-color: rgb(0, 0, 0);
+            padding: 20px 100px 20px 100px ;
+            border-radius: 5px;
+            color: #fff;
+            
+        }
+        #score button{
+            width: 50px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: black;
+            color: #fff;
+            padding: 3px;
+            cursor: pointer;
+        }
+        #again{
+            background-color: bisque;
+            color: black;
+            display: none;
+            position: absolute;
+            bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="information">
+        <h1>Calculate Every Score!!</h1>
+        <h5>Enter the details of the match</h5>
+        <div id="infotable">
+            <div id="element">
+                <label for="tournament">Tournament Name</label>
+                <input type="text" id="tournament">
+            </div>
+            <div id="element">
+                <label for="team1">Team 1</label>
+                <input type="text" id="team1">
+            </div>
+            <div id="element">
+                <label for="team2">Team 2</label>
+                <input type="text" id="team2">
+            </div>
+            <div id="element">
+                <label for="member">Member per team</label>
+                <input type="number" id="member">
+            </div>
+            <div id="element">
+               <label for="over">Over per innings</label>
+                <input type="number" id="over">
+            </div>
+            <button id="submit">Submit</button>
+        </div>
+    </div>
+    <div id="board">
+        <div>
+            <h2 id="tournament-name">Tournament name</h2>
+            <p id="teamname" >Team name</p>
+        </div>
+        <div id="first-innings">
+            <h4>First Innings</h4>
+            <p id="score-board1">Team---run / wicket (over)</p>
+            <div id="score">
+                <button id="one" class="run1" value="1">1</button>
+                <button id="two" class="run1" value="2">2</button>
+                <button id="three" class="run1" value="3">3</button>
+                <button id="four" value="4" class="run1">Four</button>
+                <button id="six" value="6" class="run1">Six</button>
+                <button value="wide" class="run1">wide</button>
+                <button id="over" value="over" class="run1">Over</button>
+                <button id="out" value="out" class="run1">Out</button>
+            </div>
+        </div>
+        <button id="next">Next Innings</button>
+        
+        <div id="second-innings">
+            <h4>Second Innings</h4>
+            <p id="score-board2">Team---run / wicket (over)</p>
+            <div id="score">
+                <button id="one" class="run2" value="1">1</button>
+                <button id="two" class="run2" value="2">2</button>
+                <button id="three" class="run2" value="3">3</button>
+                <button id="four" value="4" class="run2">Four</button>
+                <button id="six" value="6" class="run2">Six</button>
+                <button value="wide" class="run2">wide</button>
+                <button id="over" value="over" class="run2">Over</button>
+                <button id="out" value="out" class="run2">Out</button>
+                
+            </div>
+        </div>
+        <button id="pre">Previous Innings</button>
+        
+    </div>
+    <button id="again">Another Match</button>
+</body>
+<script>
+            let body= document.querySelector("body");
+        let information= document.querySelector("#information");
+        // let inputs = document.querySelectorAll("input");
+        let gametitle = document.querySelector("#tournament");
+        let team1 = document.querySelector("#team1");
+        let team2 = document.querySelector("#team2");
+        let membernumber = document.querySelector("#member");
+        let overnumber = document.querySelector("#over");
+        let submit =document.querySelector("#submit");
+        let tournamentheader= document.querySelector("#tournament-name")
+        let teamname= document.querySelector("#teamname")
+        let scorebtn1= document.querySelectorAll(".run1");
+        let scorebtn2= document.querySelectorAll(".run2");
+        let score_board1 = document.querySelector("#score-board1");
+        let score_board2 = document.querySelector("#score-board2");
+        let next = document.querySelector("#next")
+        let pre = document.querySelector("#pre")
+        let reset = document.querySelector("#again")
+        let first_innings = document.querySelector("#first-innings")
+        let second_innings = document.querySelector("#second-innings");
+
+        let run1 = 0;
+        let wicket1 = 0;
+        let over1 = 0;
+        let arr1 = Array.from(scorebtn1);
+
+
+
+
+        // let team1name= team1.value;
+        // let team1nm= team1name.trim().slice(0,3).toUpperCase();
+
+        // let team2name= team2.value;
+        // let team2nm= team2name.trim().slice(0,3).toUpperCase();
+
+        // function checkInputs() {
+        //     const allFilled = Array.from(inputs).every(input => input.value.trim() !== "");
+        //     submit.disabled = !allFilled;
+        // }
+
+        // inputs.forEach(input => input.addEventListener("input", checkInputs));
+
+
+        submit.onclick= function(){
+            information.style.display= "none";
+            board.style.display="flex";
+            again.style.display="none";
+            
+            const gamename= gametitle.value.trim();
+            let team1name= team1.value;
+            
+
+            let team2name= team2.value;
+            
+            tournamentheader.innerText= gamename;
+            teamname.innerText= `Todays match is betweeen ${team1name} vs ${team2name}`
+
+        }
+
+
+        arr1.forEach(score => {
+            score.onclick= function(){
+                let str= score.value;
+                let maxover= overnumber.value;
+                let maxwicket= membernumber.value - 1;
+                
+                
+                if(str== "over"){
+                    over1++
+                    
+                    
+                }
+                else if(str=="out"){
+                    wicket1++;
+                    
+                }
+                else if(str== "wide" ){
+                    run1++
+                    
+                    
+                }
+                else{
+                let str= score.value;
+                let numb= Number(str);
+                run1= run1 + numb;
+                
+                }
+                // console.log("run",run);
+                // console.log("over=", over);
+                // console.log("run",run);
+                if(maxover == over1 || maxwicket== wicket1){
+                    score.disabled= true;
+                    // alert("Team 1 Elemenated")
+                }
+                
+                let team1name= team1.value;
+                const team1nm= team1name.trim().slice(0,3).toUpperCase();
+                score_board1.innerText= `${team1nm}   ${run1}/${wicket1} (${over1})`
+                
+            }
+            
+        });
+
+        let run2 = 0;
+        let wicket2 = 0;
+        let over2 = 0;
+        let arr2 = Array.from(scorebtn2);
+
+        arr2.forEach(score2 => {
+            score2.onclick= function(){
+                let str= score2.value;
+                let maxover= overnumber.value;
+                let maxwicket= membernumber.value - 1;
+                
+                
+                if(str== "over"){
+                    over2++
+                    
+                    
+                }
+                else if(str=="out"){
+                    wicket2++;
+                    
+                    
+                }
+                else if(str== "wide" ){
+                    run2++
+                    
+                    
+                }
+                else{
+                let str= score2.value;
+                let numb= Number(str);
+                run2= run2 + numb;
+                
+                }
+
+                if(maxover == over2 || maxwicket== wicket2){
+                    score2.disabled= true;
+                    // alert("Team 1 Elemenated");
+                }
+
+                let team2name= team2.value;
+                const team2nm= team2name.trim().slice(0,3).toUpperCase();
+                score_board2.innerText= `${team2nm}   ${run2}/${wicket2} (${over2})`
+                
+            }
+            
+        });
+
+
+
+
+
+
+
+
+        next.onclick= function(){
+            first_innings.style.display= "none";
+            second_innings.style.display= "block";
+            next.style.display= "none";
+            pre.style.display= "block";
+            again.style.display="block";
+        }
+        pre.onclick= function(){
+            first_innings.style.display= "block";
+            second_innings.style.display= "none";
+            next.style.display= "block";
+            pre.style.display= "none";
+            again.style.display="none";
+        }
+
+        again.onclick= function(){
+            location.reload()
+            
+        }
+</script>
+</html>
