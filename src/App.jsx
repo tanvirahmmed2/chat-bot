@@ -6,8 +6,8 @@ const App = () => {
         <div className='w-full overflow-x-hidden'>
             <div className='w-full relative'>
                 <div className='w-full fixed top-0 right-0'>
-                    <nav className='w-full flex flex-row items-center justify-between px-4 h-14 shadow-lg'>
-                        <a href="/" className='italic text-xl font-semibold'>Chat-Bot</a>
+                    <nav className='w-full flex flex-row items-center justify-between px-4 h-14 shadow-md'>
+                        <a href="/" className='font-serif text-xl font-semibold'>Chat-Bot</a>
                         <div>
                             <div>
 
@@ -21,7 +21,7 @@ const App = () => {
 
                     </div>
                     <footer>
-                        
+
                     </footer>
 
                 </div>
