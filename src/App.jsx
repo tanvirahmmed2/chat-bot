@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { IoIosMenu } from "react-icons/io";
+import { ThemeContext } from './Context';
 
 const App = () => {
+    const {response, setResponse}= useContext(ThemeContext)
     const [formData, setFormData]=useState({
         language:'',
         prompt:''
     })
 
+    
 
     const handleChange=(e)=>{
         const {name, value}= e.target
