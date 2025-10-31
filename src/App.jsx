@@ -1,26 +1,37 @@
 import React, { useContext, useState } from 'react'
+import axios from 'axios'
 import { IoIosMenu } from "react-icons/io";
 import { ThemeContext } from './Context';
 
 const App = () => {
-    const {response, setResponse}= useContext(ThemeContext)
-    const [formData, setFormData]=useState({
-        language:'English',
-        prompt:''
+    const { response, setResponse, api } = useContext(ThemeContext)
+    const [formData, setFormData] = useState({
+        language: 'English',
+        prompt: ''
     })
 
-    
 
-    const handleChange=(e)=>{
-        const {name, value}= e.target
-        setFormData((prev)=>({...prev, [name]: value}))
+
+    const handleChange = (e) => {
+        const { name, value } = e.target
+        setFormData((prev) => ({ ...prev, [name]: value }))
     }
 
-    const handlePrompt=(e)=>{
+    const handlePrompt = async (e) => {
         e.preventDefault()
-        setResponse((prev)=> [...prev, formData.prompt])
-    }
+        try {
+            const response = await axios.post(`${api}/chat/send`, formData, { withCredentials: true })
+            setResponse((prev) => [...prev, response.data.payload])
+            setFormData({
+                language: 'English',
+                prompt: ''
+            })
+            
+        } catch (error) {
+            setResponse((prev) => [...prev, error])
 
+        }
+    }
     return (
         <div className='w-full overflow-x-hidden'>
             <div className='w-full relative'>
@@ -42,15 +53,15 @@ const App = () => {
                 <div className='w-full flex flex-col'>
                     <div className='w-full min-h-screen flex items-center justify-end flex-col p-4 gap-4'>
                         <h1 className='w-full text-center font-semibold text-2xl'>Welcome to <span>chat bot</span></h1>
-                        {
-                            response && <div>{
-                                response.map((e)=>{
-                                    return <div key={e}>{e}</div>
-                                })
-                            }</div>
-                        }
+                      {
+                        response.length> 0 && <div className='w-full md:w-3/4 flex flex-col items-center justify-center gap-4'>
+                            {response.map((e)=>{
+                              return  <div key={e}>{e}</div>
+                            })}
+                        </div>
+                      }
                         <form onSubmit={handlePrompt} className='w-full flex flex-col items-center justify-center md:w-3/4 gap-2'>
-                            <textarea name="prompt" id="prompt" onChange={handleChange} value={formData.prompt} className='w-full border-2 outline-none p-4 rounded-xl'></textarea>
+                            <textarea name="prompt" id="prompt" onChange={handleChange} value={formData.prompt} className='w-full border-2 outline-none p-4 rounded-xl' placeholder='create social media content'></textarea>
                             <button type='submit' className='shadow-sm p-2 px-4 bg-gray-500  text-white rounded-lg'>Create content</button>
                         </form>
                     </div>
