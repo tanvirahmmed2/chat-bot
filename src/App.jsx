@@ -16,6 +16,10 @@ const App = () => {
         setFormData((prev)=>({...prev, [name]: value}))
     }
 
+    const handlePrompt=(e)=>{
+        e.preventDefault()
+        setResponse((prev)=> [...prev, formData.prompt])
+    }
 
     return (
         <div className='w-full overflow-x-hidden'>
@@ -34,11 +38,17 @@ const App = () => {
                 <div className='w-full flex flex-col'>
                     <div className='w-full min-h-screen flex items-center justify-end flex-col p-4 gap-4'>
                         <h1 className='w-full text-center font-semibold text-2xl'>Welcome to <span>chat bot</span></h1>
-
-                        <div className='w-full flex flex-col items-center justify-center md:w-3/4 gap-2'>
+                        {
+                            response && <div>{
+                                response.map((e)=>{
+                                    return <div key={e}>{e}</div>
+                                })
+                            }</div>
+                        }
+                        <form onSubmit={handlePrompt} className='w-full flex flex-col items-center justify-center md:w-3/4 gap-2'>
                             <textarea name="prompt" id="prompt" onChange={handleChange} value={formData.prompt} className='w-full border-2 outline-none p-4 rounded-xl'></textarea>
-                            <button className='shadow-sm p-2 px-4 bg-gray-500  text-white rounded-lg'>Create content</button>
-                        </div>
+                            <button type='submit' className='shadow-sm p-2 px-4 bg-gray-500  text-white rounded-lg'>Create content</button>
+                        </form>
                     </div>
 
                     <footer className='w-full items-center flex justify-center py-4 border-t-2 '>

@@ -4,7 +4,7 @@ export const ThemeContext= createContext()
 
 
 const Context = ({children}) => {
-    const [response, setResponse]= useState(null)
+    const [response, setResponse]= useState([])
     const value={
         response, setResponse
     }
