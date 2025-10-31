@@ -62,8 +62,8 @@ const App = () => {
                         </div>
                       }
                         <form onSubmit={handlePrompt} className='w-full flex flex-col items-center justify-center md:w-3/4 gap-2'>
-                            <textarea name="prompt" id="prompt" onChange={handleChange} value={formData.prompt} className='w-full border-2 outline-none p-4 rounded-xl' placeholder='create social media content'></textarea>
-                            <button type='submit' className='shadow-sm p-2 px-4 bg-gray-500  text-white rounded-lg'>{button}</button>
+                            <textarea name="prompt" id="prompt" onChange={handleChange} value={formData.prompt} className='w-full border-2 outline-none p-4 rounded-xl' placeholder='create social media content, just enter topic name'></textarea>
+                            <button type='submit' className='shadow-sm p-2 px-4 bg-emerald-500  text-white rounded-lg'>{button}</button>
                         </form>
                     </div>
 
