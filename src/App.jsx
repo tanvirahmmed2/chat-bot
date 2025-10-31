@@ -5,7 +5,7 @@ import { ThemeContext } from './Context';
 const App = () => {
     const {response, setResponse}= useContext(ThemeContext)
     const [formData, setFormData]=useState({
-        language:'',
+        language:'English',
         prompt:''
     })
 
@@ -27,9 +27,13 @@ const App = () => {
                 <div className='w-full fixed top-0 right-0'>
                     <nav className='w-full flex flex-row items-center justify-between px-4 h-14 border-b-2 bg-white'>
                         <a href="/" className='font-serif text-xl font-semibold'>Chat-Bot</a>
-                        <div>
-                            <div>
-
+                        <div className='w-auto flex flex-row items-center justify-center gap-4'>
+                            <div className='w-auto flex flex-row items-center justify-center h-full gap-6'>
+                                <label htmlFor="language">Langugae</label>
+                                <select name="language" id="language" required onChange={handleChange} value={formData.language} className='outline-none border-2 p-1 rounded-md'>
+                                    <option value="English">English</option>
+                                    <option value="Bangla">Bangla</option>
+                                </select>
                             </div>
                             <button className='text-2xl '><IoIosMenu /></button>
                         </div>
