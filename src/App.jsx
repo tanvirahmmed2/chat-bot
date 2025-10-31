@@ -10,7 +10,7 @@ const App = () => {
         prompt: ''
     })
 
-
+    const [button, setButton]= useState('Create content')
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -19,6 +19,7 @@ const App = () => {
 
     const handlePrompt = async (e) => {
         e.preventDefault()
+        setButton(`Thinking`)
         try {
             const response = await axios.post(`${api}/chat/send`, formData, { withCredentials: true })
             setResponse((prev) => [...prev, response.data.payload])
@@ -26,10 +27,10 @@ const App = () => {
                 language: 'English',
                 prompt: ''
             })
-            
+            setButton('Create content')
         } catch (error) {
             setResponse((prev) => [...prev, error])
-
+            setButton('Create content')
         }
     }
     return (
@@ -62,7 +63,7 @@ const App = () => {
                       }
                         <form onSubmit={handlePrompt} className='w-full flex flex-col items-center justify-center md:w-3/4 gap-2'>
                             <textarea name="prompt" id="prompt" onChange={handleChange} value={formData.prompt} className='w-full border-2 outline-none p-4 rounded-xl' placeholder='create social media content'></textarea>
-                            <button type='submit' className='shadow-sm p-2 px-4 bg-gray-500  text-white rounded-lg'>Create content</button>
+                            <button type='submit' className='shadow-sm p-2 px-4 bg-gray-500  text-white rounded-lg'>{button}</button>
                         </form>
                     </div>
 
