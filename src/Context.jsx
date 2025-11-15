@@ -5,7 +5,7 @@ export const ThemeContext= createContext()
 
 const Context = ({children}) => {
     const [response, setResponse]= useState([])
-    const api= 'https://cb-server-skrg.onrender.com'
+    const api= 'https://cb-server-4l00.onrender.com'
     const value={
         response, setResponse,
         api
